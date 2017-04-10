@@ -11,23 +11,13 @@ namespace com.flavienm.engine.input
         public static void Create()
         {
             deviceType = SystemInfo.deviceType;
-
-            CreateInputObject(
-                applicationIsMobile() || applicationIsEditor(), 
-                applicationIsDeskop() || applicationIsEditor(),
-                "Engine"
-            );
+            CreateInputObject();
         }
 
-        private static void CreateInputObject(bool touch, bool desktop, string inputName = "")
+        private static void CreateInputObject()
         {
-            if (touch)
-                GameObjectUtils.CreateGameObjectWithScript<InputTouch> ("InputTouch" + inputName);
-            if (desktop)
-                GameObjectUtils.CreateGameObjectWithScript<InputDesktop>("InputDesktop" + inputName);
-
-            if (!touch && !desktop)
-                throw new Exception("Unknow device type");
+            GameObjectUtils.CreateGameObjectWithScript<InputTobii> ("InputTobii");
+            GameObjectUtils.CreateGameObjectWithScript<InputDesktop>("InputDesktop");
         }
 
         private static bool applicationIsMobile ()
