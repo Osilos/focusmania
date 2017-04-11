@@ -20,6 +20,7 @@ namespace com.flavienm.engine.input
 
             Debug.Log(EyeTrackingHost.TobiiEngineAvailability);
             Debug.Log(EyeTracking.GetGazePoint().Screen);
+            Debug.Log(EyeTracking.GetGazeTrackingStatus().Status);
 
             if (EyeTracking.GetUserPresence().IsUserPresent)
             {
@@ -28,6 +29,12 @@ namespace com.flavienm.engine.input
             else
             {
                 Debug.Log("ENGINE NOT WORKING");
+            }
+
+            DispatchPositionEvent(positionInput, EyeTracking.GetGazePoint().Screen);
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+            {
+                DispatchSpaceEvent();
             }
         }
     }
