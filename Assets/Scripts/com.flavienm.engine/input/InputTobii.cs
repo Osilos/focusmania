@@ -18,7 +18,6 @@ namespace com.flavienm.engine.input
                 Debug.Log("ENGINE NOT WORKING");
             }
 
-            Debug.Log(EyeTrackingHost.TobiiEngineAvailability);
             Debug.Log(EyeTracking.GetGazePoint().Screen);
             Debug.Log(EyeTracking.GetGazeTrackingStatus().Status);
 
