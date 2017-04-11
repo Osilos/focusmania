@@ -9,7 +9,7 @@ namespace com.flavienm.engine.input
 
         void Update()
         {
-            Debug.Log(UnityEngine.Input.mousePosition);
+            //Debug.Log(UnityEngine.Input.mousePosition);
             if (mousePostion != UnityEngine.Input.mousePosition)
             {
                 mousePostion = UnityEngine.Input.mousePosition;
