@@ -18,14 +18,8 @@ namespace com.flavienm.engine.input
                 Debug.Log("ENGINE NOT WORKING");
             }
 
-            if (EyeTrackingHost.GetInstance().EyeTrackingDeviceStatus == DeviceStatus.Tracking)
-            {
-                Debug.Log("IS TRACKING");
-            }
-            else
-            {
-                Debug.Log("ENGINE NOT WORKING");
-            }
+            Debug.Log(EyeTrackingHost.TobiiEngineAvailability);
+            Debug.Log(EyeTracking.GetGazePoint().Screen);
 
             if (EyeTracking.GetUserPresence().IsUserPresent)
             {
