@@ -12,17 +12,24 @@ namespace com.flavienm.engine.input
         public static PositionEvent positionInput;
         public static InputEvent left;
         public static InputEvent right;
+        public static InputEvent space;
 
         protected void DispatchPositionEvent (PositionEvent positionEvent, Vector3 position)
         {
             if (positionEvent != null)
-                positionEvent(position);
+                positionEvent(Camera.main.ScreenToWorldPoint(position));
         }
 
         protected void DispatchDirectionEvent(DirectionEvent directionEvent, Vector3 position, Vector3 direction)
         {
             if (directionEvent != null)
                 directionEvent(position, direction);
+        }
+
+        protected void DispatchSpaceEvent ()
+        {
+            if (space != null)
+                space();
         }
 
         protected void DispatchLeftEvent()

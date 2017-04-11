@@ -5,16 +5,19 @@ namespace com.flavienm.engine.input
 {
     public class InputDesktop : Input
     {
+        private Vector3 mousePostion = Vector3.zero;
+
         void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.LeftArrow))
+            Debug.Log(UnityEngine.Input.mousePosition);
+            if (mousePostion != UnityEngine.Input.mousePosition)
             {
-                DispatchLeftEvent();
+                mousePostion = UnityEngine.Input.mousePosition;
+                DispatchPositionEvent(positionInput, mousePostion);
             }
-
-            if (UnityEngine.Input.GetKeyDown(KeyCode.RightArrow))
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
             {
-                DispatchRighEvent();
+                DispatchSpaceEvent();
             }
         }
     }

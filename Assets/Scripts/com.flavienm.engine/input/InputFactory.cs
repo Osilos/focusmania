@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using com.flavienm.engine.utils;
+using Tobii.EyeTracking;
 
 namespace com.flavienm.engine.input
 {
@@ -11,13 +12,22 @@ namespace com.flavienm.engine.input
         public static void Create()
         {
             deviceType = SystemInfo.deviceType;
-            CreateInputObject();
+            CreateInputObject(hasEyeTracking());
         }
 
-        private static void CreateInputObject()
+        private static void CreateInputObject(bool tobii)
         {
-            GameObjectUtils.CreateGameObjectWithScript<InputTobii> ("InputTobii");
-            GameObjectUtils.CreateGameObjectWithScript<InputDesktop>("InputDesktop");
+            if (tobii)
+                GameObjectUtils.CreateGameObjectWithScript<InputTobii> ("InputTobii");
+            else
+                GameObjectUtils.CreateGameObjectWithScript<InputDesktop>("InputDesktop");
+        }
+
+        private static bool hasEyeTracking ()
+        {
+            return 
+                EyeTrackingHost.TobiiEngineAvailability.Equals(EngineAvailability.Running)
+                && EyeTracking.GetGazeTrackingStatus().Status.Equals(GazeTrackingStatus.GazeTracked);
         }
 
         private static bool applicationIsMobile ()
