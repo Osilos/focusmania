@@ -17,7 +17,7 @@ namespace com.flavienm.engine.input
         protected void DispatchPositionEvent (PositionEvent positionEvent, Vector3 position)
         {
             if (positionEvent != null)
-                positionEvent(position);
+                positionEvent(Camera.main.ScreenToWorldPoint(position));
         }
 
         protected void DispatchDirectionEvent(DirectionEvent directionEvent, Vector3 position, Vector3 direction)

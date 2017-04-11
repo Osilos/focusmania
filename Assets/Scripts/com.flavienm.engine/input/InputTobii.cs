@@ -17,9 +17,14 @@ namespace com.flavienm.engine.input
             {
                // Debug.Log("ENGINE NOT WORKING");
             }
-
+            
             //Debug.Log(EyeTracking.GetGazePoint().Screen);
             //Debug.Log(EyeTracking.GetGazeTrackingStatus().Status);
+            Debug.Log(EyeTracking.GetGazePoint().Screen);
+            
+            
+
+            EyeTrackingHost.GetInstance().EyeTrackingDeviceStatus.Equals(DeviceStatus.Tracking);
 
             if (EyeTracking.GetUserPresence().IsUserPresent)
             {
