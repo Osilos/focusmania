@@ -12,30 +12,30 @@ public class GenerateStage : MonoBehaviour {
 	private Vector2 size;
 	[SerializeField]
 	private Texture texture;
-
-	// Use this for initialization
-	void Start () {
+	
+	private void Start () {
 		Vector3 position = new Vector3(-(size.x/2), -(size.y/2), -5f);
-		float sideSizeX = textureSize.x / size.x;
-		float sideSizeY = textureSize.y / size.y;
+		float sideSizeX = 1f / size.x;
+		float sideSizeY = 1f / size.y;
 		
 		for (int x = 0; x < size.x; x++)
 		{
 			for (int y = 0; y < size.y; y++)
 			{
 				GameObject quad = CreateQuad(position);
+				
 				Mesh mesh = quad.GetComponent<MeshFilter>().mesh;
 				List<Vector2> uvs = new List<Vector2>();
 
-				
-
 				uvs.Add(new Vector2(x * sideSizeX, y * sideSizeY));
-				uvs.Add(new Vector2(x * sideSizeX + sideSizeX, y * sideSizeY));
 				uvs.Add(new Vector2(x * sideSizeX + sideSizeX, y * sideSizeY + sideSizeY));
+				uvs.Add(new Vector2(x * sideSizeX + sideSizeX, y * sideSizeY));
 				uvs.Add(new Vector2(x * sideSizeX, y * sideSizeY + sideSizeY));
+
 				mesh.uv = uvs.ToArray();
-                mesh.RecalculateNormals();
-                position.y += 1f;
+				mesh.RecalculateNormals();
+
+				position.y += 1f;
 			}
 				
 			position.y = -(size.y / 2);
@@ -46,10 +46,5 @@ public class GenerateStage : MonoBehaviour {
 	private GameObject CreateQuad (Vector3 position)
 	{
 		return Instantiate(prefabQuad, position, prefabQuad.transform.rotation);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }
