@@ -19,10 +19,15 @@ public class FollowEye : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-		Debug.Log("test");
 		if (other.gameObject.layer == LayerMask.NameToLayer("Destructible"))
 		{
-			Destroy(other.gameObject);
+			StartCoroutine(other.gameObject.GetComponent <TriangleExplosion>().SplitMesh(true));
+			//Destroy(other.gameObject);
+		}
+
+		if(other.gameObject.layer == LayerMask.NameToLayer("Bomb"))
+		{
+			other.GetComponent<Bomb>().Explode();
 		}
 	}
 }
