@@ -14,8 +14,10 @@ namespace com.flavienm.engine.ui
         private GameObject gameOverHud;
         [SerializeField]
         private GameObject gameHud;
+		[SerializeField]
+		private GameObject creditsHud;
 
-        private void Start()
+		private void Start()
         {
             StartCoroutine(WaitForInit());
         }
@@ -33,20 +35,33 @@ namespace com.flavienm.engine.ui
             startHud.SetActive(true);
             gameOverHud.SetActive(false);
             gameHud.SetActive(false);
+			creditsHud.SetActive(false);
         }
 
-        protected override void OnGameOver()
+		protected override void OnCredits()
+		{
+
+			startHud.SetActive(false);
+			gameOverHud.SetActive(false);
+			gameHud.SetActive(false);
+			creditsHud.SetActive(true);
+
+		}
+
+		protected override void OnGameOver()
         {
             startHud.SetActive(false);
             gameOverHud.SetActive(true);
             gameHud.SetActive(false);
-        }
+			creditsHud.SetActive(false);
+		}
 
         protected override void OnNewGame()
         {
             startHud.SetActive(false);
             gameOverHud.SetActive(false);
             gameHud.SetActive(true);
-        }
+			creditsHud.SetActive(false);
+		}
     }
 }
