@@ -16,12 +16,18 @@ namespace com.flavienm.engine.ui
 
         private void Start()
         {
-            
+            StartCoroutine(WaitForInit());
+        }
+
+        private IEnumerator WaitForInit ()
+        {
+            yield return new WaitForSeconds(0.1f);
+            com.flavienm.engine.input.InputFactory.Create();
         }
 
         protected override void OnMenu()
         {
-            com.flavienm.engine.input.InputFactory.Create();
+            
             startHud.SetActive(true);
             gameOverHud.SetActive(false);
             gameHud.SetActive(false);
