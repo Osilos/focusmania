@@ -17,8 +17,9 @@ namespace com.flavienm.engine
         public static GameEvent NewGame;
         public static GameEvent GameOver;
         public static GameEvent Menu;
+        public static GameEvent Credits;
 
-        public AnimationCurve difficultyCurve;
+		public AnimationCurve difficultyCurve;
 
         [SerializeField]
         private AudioSource loseSound;
@@ -40,7 +41,8 @@ namespace com.flavienm.engine
             com.flavienm.engine.Player.Killed += OnPlayerKilled;
             ActionHUD.OnPlay += StartGame;
             ActionHUD.OnMenu += GoMenu;
-            DispatchMenuEvent();
+            ActionHUD.OnCredits += GoCredits;
+			DispatchMenuEvent();
         }
 
         public void GoMenu()
@@ -48,7 +50,12 @@ namespace com.flavienm.engine
             DispatchMenuEvent();
         }
 
-        public void StartGame()
+		public void GoCredits()
+		{
+			DispatchCreditsEvent();
+		}
+
+		public void StartGame()
         {
             DispatchNewGameEvent();
         }
@@ -87,7 +94,15 @@ namespace com.flavienm.engine
             }
         }
 
-        private void IncreaseDifficulty ()
+		private void DispatchCreditsEvent()
+		{
+			if(Credits != null)
+			{
+				Credits();
+			}
+		}
+
+		private void IncreaseDifficulty ()
         {
             currentDifficulty += increaseDifficultyStep;
             difficulty = difficultyCurve.Evaluate(currentDifficulty);

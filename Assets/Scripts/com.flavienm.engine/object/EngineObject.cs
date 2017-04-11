@@ -10,10 +10,12 @@ namespace com.flavienm.engine
             com.flavienm.engine.GameManager.NewGame += OnNewGame;
             com.flavienm.engine.GameManager.GameOver += OnGameOver;
             com.flavienm.engine.GameManager.Menu += OnMenu;
-        }
+            com.flavienm.engine.GameManager.Credits += OnCredits;
+		}
 
         protected virtual void OnMenu() { }
-        protected virtual void OnGameOver() { }
+        protected virtual void OnCredits() { }
+		protected virtual void OnGameOver() { }
         protected virtual void OnNewGame() { }
         protected virtual void OnMarkPoint() { }
 
@@ -22,6 +24,7 @@ namespace com.flavienm.engine
             com.flavienm.engine.GameManager.NewGame -= OnNewGame;
             com.flavienm.engine.GameManager.GameOver -= OnGameOver;
             com.flavienm.engine.GameManager.Menu -= OnMenu;
-        }
+			com.flavienm.engine.GameManager.Credits += OnCredits;
+		}
     }
 }
