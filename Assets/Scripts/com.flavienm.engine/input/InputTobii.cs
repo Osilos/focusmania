@@ -19,6 +19,10 @@ namespace com.flavienm.engine.input
             }
 
             Debug.Log(EyeTracking.GetGazePoint().Screen);
+            
+            
+
+            EyeTrackingHost.GetInstance().EyeTrackingDeviceStatus.Equals(DeviceStatus.Tracking);
 
             if (EyeTracking.GetUserPresence().IsUserPresent)
             {
