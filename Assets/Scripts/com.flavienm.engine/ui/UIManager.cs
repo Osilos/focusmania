@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using com.flavienm.engine;
+using Tobii.EyeTracking;
 
 namespace com.flavienm.engine.ui
 {
@@ -21,7 +22,8 @@ namespace com.flavienm.engine.ui
 
         private IEnumerator WaitForInit ()
         {
-            yield return new WaitForSeconds(0.1f);
+            EyeTrackingHost.GetInstance().Initialize();
+            yield return new WaitForSeconds(1.1f);
             com.flavienm.engine.input.InputFactory.Create();
         }
 
