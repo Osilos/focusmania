@@ -13,15 +13,27 @@ namespace com.flavienm.engine.input
             {
                 Debug.Log("ENGINE IS HERE");
             }
+            else
+            {
+                Debug.Log("ENGINE NOT WORKING");
+            }
 
             if (EyeTrackingHost.GetInstance().EyeTrackingDeviceStatus == DeviceStatus.Tracking)
             {
                 Debug.Log("IS TRACKING");
             }
+            else
+            {
+                Debug.Log("ENGINE NOT WORKING");
+            }
 
             if (EyeTracking.GetUserPresence().IsUserPresent)
             {
                 Debug.Log("IS USER PRESENT");
+            }
+            else
+            {
+                Debug.Log("ENGINE NOT WORKING");
             }
         }
     }

@@ -20,6 +20,8 @@ namespace com.flavienm.engine.input
             GameObjectUtils.CreateGameObjectWithScript<InputDesktop>("InputDesktop");
         }
 
+        //private static bool 
+
         private static bool applicationIsMobile ()
         {
             return Application.isMobilePlatform;

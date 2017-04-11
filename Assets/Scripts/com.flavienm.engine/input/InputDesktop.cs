@@ -7,14 +7,10 @@ namespace com.flavienm.engine.input
     {
         void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.LeftArrow))
+            DispatchPositionEvent(positionInput, UnityEngine.Input.mousePosition);
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
             {
-                DispatchLeftEvent();
-            }
-
-            if (UnityEngine.Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                DispatchRighEvent();
+                DispatchSpaceEvent();
             }
         }
     }

@@ -12,6 +12,7 @@ namespace com.flavienm.engine.input
         public static PositionEvent positionInput;
         public static InputEvent left;
         public static InputEvent right;
+        public static InputEvent space;
 
         protected void DispatchPositionEvent (PositionEvent positionEvent, Vector3 position)
         {
@@ -23,6 +24,12 @@ namespace com.flavienm.engine.input
         {
             if (directionEvent != null)
                 directionEvent(position, direction);
+        }
+
+        protected void DispatchSpaceEvent ()
+        {
+            if (space != null)
+                space();
         }
 
         protected void DispatchLeftEvent()
