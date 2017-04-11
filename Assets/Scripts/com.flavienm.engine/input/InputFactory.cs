@@ -17,6 +17,7 @@ namespace com.flavienm.engine.input
 
         private static void CreateInputObject(bool tobii)
         {
+            Debug.Log(EyeTrackingHost.GetInstance().EyeTrackingDeviceStatus);
             if (tobii)
                 GameObjectUtils.CreateGameObjectWithScript<InputTobii> ("InputTobii");
             else
@@ -25,9 +26,9 @@ namespace com.flavienm.engine.input
 
         private static bool hasEyeTracking ()
         {
-            return 
-                EyeTrackingHost.TobiiEngineAvailability.Equals(EngineAvailability.Running)
-                && EyeTracking.GetGazeTrackingStatus().Status.Equals(GazeTrackingStatus.GazeTracked);
+            
+            return
+                EyeTrackingHost.TobiiEngineAvailability.Equals(EngineAvailability.Running);
         }
 
         private static bool applicationIsMobile ()
