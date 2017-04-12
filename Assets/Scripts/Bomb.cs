@@ -35,16 +35,6 @@ public class Bomb : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	protected void ChangePumped(bool reset)
-	{
-		GetComponent<SpriteRenderer>().color = new Color(GetComponent<SpriteRenderer>().color.r, 1 - (0.2f * countPumped), 1 - (0.2f * countPumped), GetComponent<SpriteRenderer>().color.a);
-
-		if(reset)
-		{
-			GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, GetComponent<SpriteRenderer>().color.a);
-		}
-	}
-
 	private void OnDestroy()
 	{
 		CancelInvoke();
