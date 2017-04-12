@@ -18,7 +18,7 @@ public class VerticalScrolling : MonoBehaviour {
 	void Update () {
 
         Background.transform.position += new Vector3(0,  Time.deltaTime * 0.7f, 0);
-        GamePlane.transform.position += new Vector3(GamePlane.transform.position.x,  Time.deltaTime, GamePlane.transform.position.z);
+        GamePlane.transform.position += new Vector3(0,  Time.deltaTime, 0);
 		
 	}
 }

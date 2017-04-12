@@ -9,16 +9,12 @@ namespace com.flavienm.engine.input
 
         void Update()
         {
-            //Debug.Log(UnityEngine.Input.mousePosition);
             if (mousePostion != UnityEngine.Input.mousePosition)
             {
                 mousePostion = UnityEngine.Input.mousePosition;
                 DispatchPositionEvent(positionInput, mousePostion);
             }
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
-            {
-                DispatchSpaceEvent();
-            }
+            SpaceInput();
         }
     }
 }

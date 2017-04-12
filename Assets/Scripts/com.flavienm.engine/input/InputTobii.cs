@@ -9,34 +9,8 @@ namespace com.flavienm.engine.input
     {
         private void Update()
         {
-            if (EyeTrackingHost.TobiiEngineAvailability.Equals(EngineAvailability.Running))
-            {
-               // Debug.Log("ENGINE IS HERE");
-            }
-            else
-            {
-               // Debug.Log("ENGINE NOT WORKING");
-            }
-            
-            //Debug.Log(EyeTracking.GetGazePoint().Screen);
-            //Debug.Log(EyeTracking.GetGazeTrackingStatus().Status);
-            Debug.Log(EyeTracking.GetGazePoint().Screen);
-            
-            
-
-            EyeTrackingHost.GetInstance().EyeTrackingDeviceStatus.Equals(DeviceStatus.Tracking);
-
-            if (EyeTracking.GetUserPresence().IsUserPresent)
-            {
-               // Debug.Log("IS USER PRESENT");
-            }
-            else
-            {
-               // Debug.Log("ENGINE NOT WORKING");
-            }
-
             DispatchPositionEvent(positionInput, EyeTracking.GetGazePoint().Screen);
-            
+            SpaceInput();
         }
     }
 }

@@ -3,31 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using com.flavienm.engine;
+using com.flavienm.engine.input;
 
 public class FollowEye : MonoBehaviour {
 
-	// Use this for initialization
+	public static bool laser = false;
+
 	void Start () {
 		com.flavienm.engine.input.Input.positionInput += OnMovement;
+		com.flavienm.engine.input.Input.space += OnSpace;
+	}
+
+	private void OnSpace ()
+	{
+		laser = !laser;
 	}
 	
 	private void OnMovement (Vector3 position)
 	{
-        position.z = 0f;
+		position.z = 0f;
 		transform.position = position;
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.layer == LayerMask.NameToLayer("Destructible"))
+		if (laser)
 		{
-			StartCoroutine(other.gameObject.GetComponent <TriangleExplosion>().SplitMesh(true));
-			//Destroy(other.gameObject);
-		}
+			if (other.gameObject.layer == LayerMask.NameToLayer("Destructible"))
+			{
+				StartCoroutine(other.gameObject.GetComponent<TriangleExplosion>().SplitMesh(true));
+			}
 
-		if(other.gameObject.layer == LayerMask.NameToLayer("Bomb"))
-		{
-			other.GetComponent<Bomb>().Explode();
+			if (other.gameObject.layer == LayerMask.NameToLayer("Bomb"))
+			{
+				other.GetComponent<Bomb>().Explode();
+			}
 		}
 	}
 }

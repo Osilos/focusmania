@@ -26,6 +26,14 @@ namespace com.flavienm.engine.input
                 directionEvent(position, direction);
         }
 
+        protected void SpaceInput ()
+        {
+            if (UnityEngine.Input.GetKeyUp(KeyCode.Space))
+            {
+                DispatchSpaceEvent();
+            }
+        }
+
         protected void DispatchSpaceEvent ()
         {
             if (space != null)
