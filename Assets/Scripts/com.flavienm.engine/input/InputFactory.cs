@@ -18,12 +18,15 @@ namespace com.flavienm.engine.input
 
         private static void CreateInputObject(bool tobii)
         {
-            GameObjectUtils.CreateGameObjectWithScript<InputTobii> ("InputTobii");
-            GameObjectUtils.CreateGameObjectWithScript<InputDesktop>("InputDesktop");
+            if(tobii)
+                GameObjectUtils.CreateGameObjectWithScript<InputTobii> ("InputTobii");
+           else
+                GameObjectUtils.CreateGameObjectWithScript<InputDesktop>("InputDesktop");
         }
 
         private static bool hasEyeTracking ()
         {
+            EyeTracking.Initialize();
             Debug.Log(EyeTrackingHost.GetInstance().UserPresence.IsUserPresent);
             Debug.Log(EyeTracking.GetGazeTrackingStatus().IsTrackingEyeGaze);
             return
