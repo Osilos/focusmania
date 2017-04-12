@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenerateStage : MonoBehaviour {
+public class StageGenerator : MonoBehaviour {
 
 	[SerializeField]
 	private GameObject prefabQuad;
@@ -16,18 +16,21 @@ public class GenerateStage : MonoBehaviour {
 	[SerializeField]
 	private Vector2 wallPartSize;
 	
-	private void Start () {
-		Vector3 position = new Vector3(-(size.x*wallPartSize.x/2), -(size.y*wallPartSize.y/2), -5f);
+
+	public void Generate ()
+	{
+		GameObject parent = new GameObject();
+		Vector3 position = new Vector3(-(size.x * wallPartSize.x / 2), -(size.y * wallPartSize.y / 2), -5f);
 		float sideSizeX = 1f / size.x;
 		float sideSizeY = 1f / size.y;
-		
+
 		for (int x = 0; x < size.x; x++)
 		{
 			for (int y = 0; y < size.y; y++)
 			{
 				GameObject quad = CreateQuad(position);
-				
-				Mesh mesh = quad.GetComponent<MeshFilter>().mesh;
+				quad.transform.SetParent(parent.transform);
+				Mesh mesh = quad.GetComponent<MeshFilter>().sharedMesh;
 				List<Vector2> uvs = new List<Vector2>();
 
 				uvs.Add(new Vector2(x * sideSizeX, y * sideSizeY));
@@ -40,7 +43,7 @@ public class GenerateStage : MonoBehaviour {
 
 				position.y += wallPartSize.y;
 			}
-				
+
 			position.y = -(size.y * wallPartSize.y / 2);
 			position.x += wallPartSize.x;
 		}

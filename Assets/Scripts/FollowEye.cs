@@ -29,7 +29,7 @@ public class FollowEye : MonoBehaviour {
 	{
 		if (laser)
 		{
-			if (other.gameObject.layer == LayerMask.NameToLayer("Destructible"))
+			if (other.gameObject.layer == LayerMask.NameToLayer("Destructible") )
 			{
 				StartCoroutine(other.gameObject.GetComponent<TriangleExplosion>().SplitMesh(true));
 			}
