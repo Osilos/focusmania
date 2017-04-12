@@ -11,13 +11,15 @@ namespace com.flavienm.engine.input
         {
             if (EyeTrackingHost.TobiiEngineAvailability.Equals(EngineAvailability.Running))
             {
-                Debug.Log("ENGINE IS HERE");
+               // Debug.Log("ENGINE IS HERE");
             }
             else
             {
-                Debug.Log("ENGINE NOT WORKING");
+               // Debug.Log("ENGINE NOT WORKING");
             }
-
+            
+            //Debug.Log(EyeTracking.GetGazePoint().Screen);
+            //Debug.Log(EyeTracking.GetGazeTrackingStatus().Status);
             Debug.Log(EyeTracking.GetGazePoint().Screen);
             
             
@@ -26,12 +28,15 @@ namespace com.flavienm.engine.input
 
             if (EyeTracking.GetUserPresence().IsUserPresent)
             {
-                Debug.Log("IS USER PRESENT");
+               // Debug.Log("IS USER PRESENT");
             }
             else
             {
-                Debug.Log("ENGINE NOT WORKING");
+               // Debug.Log("ENGINE NOT WORKING");
             }
+
+            DispatchPositionEvent(positionInput, EyeTracking.GetGazePoint().Screen);
+            
         }
     }
 }

@@ -1,7 +1,11 @@
 fileFormatVersion: 2
 guid: 92f84a005a182964cb59bc1d7e71368b
 folderAsset: yes
+<<<<<<< HEAD:Assets/Material.meta
 timeCreated: 1491904590
+=======
+timeCreated: 1491923193
+>>>>>>> 18abb100f08ddb2617f29074441789a4b08eddef:Assets/Tobii/Plugins/x86.meta
 licenseType: Free
 DefaultImporter:
   userData: 

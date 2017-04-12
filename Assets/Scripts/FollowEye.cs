@@ -17,8 +17,17 @@ public class FollowEye : MonoBehaviour {
 		transform.position = position;
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.layer == LayerMask.NameToLayer("Destructible"))
+		{
+			StartCoroutine(other.gameObject.GetComponent <TriangleExplosion>().SplitMesh(true));
+			//Destroy(other.gameObject);
+		}
+
+		if(other.gameObject.layer == LayerMask.NameToLayer("Bomb"))
+		{
+			other.GetComponent<Bomb>().Explode();
+		}
 	}
 }

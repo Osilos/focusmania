@@ -9,8 +9,9 @@ namespace com.flavienm.engine.ui
         public delegate void EventHUD();
         public static EventHUD OnPlay;
         public static EventHUD OnMenu;
+        public static EventHUD OnCredits;
 
-        public void OnPlayButton ()
+		public void OnPlayButton ()
         {
             if (OnPlay != null)
             {
@@ -25,5 +26,13 @@ namespace com.flavienm.engine.ui
                 OnMenu();
             }
         }
-    }
+
+		public void OnCreditsButton()
+		{
+			if(OnCredits != null)
+			{
+				OnCredits();
+			}
+		}
+	}
 }

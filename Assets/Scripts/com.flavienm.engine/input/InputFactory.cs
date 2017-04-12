@@ -11,23 +11,25 @@ namespace com.flavienm.engine.input
 
         public static void Create()
         {
+            Debug.Log("Creation Input Factory");
             deviceType = SystemInfo.deviceType;
             CreateInputObject(hasEyeTracking());
         }
 
         private static void CreateInputObject(bool tobii)
         {
-            if (tobii)
                 GameObjectUtils.CreateGameObjectWithScript<InputTobii> ("InputTobii");
-            else
+           
                 GameObjectUtils.CreateGameObjectWithScript<InputDesktop>("InputDesktop");
         }
 
         private static bool hasEyeTracking ()
         {
-            return 
+            Debug.Log(EyeTrackingHost.GetInstance().UserPresence.IsUserPresent);
+            Debug.Log(EyeTracking.GetGazeTrackingStatus().IsTrackingEyeGaze);
+            return
                 EyeTrackingHost.TobiiEngineAvailability.Equals(EngineAvailability.Running)
-                && EyeTracking.GetGazeTrackingStatus().Status.Equals(GazeTrackingStatus.GazeTracked);
+                && EyeTrackingHost.GetInstance().EyeTrackingDeviceStatus.Equals(DeviceStatus.Tracking);
         }
 
         private static bool applicationIsMobile ()
