@@ -7,7 +7,7 @@ using com.flavienm.engine.input;
 
 public class FollowEye : MonoBehaviour {
 
-	private bool laser = false;
+	public static bool laser = false;
 
 	void Start () {
 		com.flavienm.engine.input.Input.positionInput += OnMovement;

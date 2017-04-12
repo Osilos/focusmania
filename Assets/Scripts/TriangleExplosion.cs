@@ -71,6 +71,7 @@ public class TriangleExplosion : MonoBehaviour
 				GO.layer = LayerMask.NameToLayer("Particle");
 				GO.transform.position = transform.position;
 				GO.transform.rotation = transform.rotation;
+				GO.transform.localScale = transform.localScale;
 				GO.AddComponent<MeshRenderer>().material = materials[submesh];
 				GO.AddComponent<MeshFilter>().mesh = mesh;
 				GO.AddComponent<BoxCollider>();

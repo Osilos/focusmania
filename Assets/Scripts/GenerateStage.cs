@@ -12,9 +12,12 @@ public class GenerateStage : MonoBehaviour {
 	private Vector2 size;
 	[SerializeField]
 	private Texture texture;
+
+	[SerializeField]
+	private Vector2 wallPartSize;
 	
 	private void Start () {
-		Vector3 position = new Vector3(-(size.x/2), -(size.y/2), -5f);
+		Vector3 position = new Vector3(-(size.x*wallPartSize.x/2), -(size.y*wallPartSize.y/2), -5f);
 		float sideSizeX = 1f / size.x;
 		float sideSizeY = 1f / size.y;
 		
@@ -35,11 +38,11 @@ public class GenerateStage : MonoBehaviour {
 				mesh.uv = uvs.ToArray();
 				mesh.RecalculateNormals();
 
-				position.y += 1f;
+				position.y += wallPartSize.y;
 			}
 				
-			position.y = -(size.y / 2);
-			position.x += 1f;
+			position.y = -(size.y * wallPartSize.y / 2);
+			position.x += wallPartSize.x;
 		}
 	}
 
