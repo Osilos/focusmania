@@ -36,7 +36,7 @@ public class FollowEye : MonoBehaviour {
 
 			if (other.gameObject.layer == LayerMask.NameToLayer("Bomb"))
 			{
-				other.GetComponent<Bomb>().Explode();
+				other.GetComponent<Bomb>().Hit(false);
 			}
 		}
 	}
