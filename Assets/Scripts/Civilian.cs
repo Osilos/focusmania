@@ -28,7 +28,7 @@ public class Civilian : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if(DetectionCollision(raycastArray[0].transform.position) && DetectionCollision(raycastArray[1].transform.position) && DetectionCollision(raycastArray[2].transform.position))
+        if(DetectionCollision(raycastArray[0].transform.position) || DetectionCollision(raycastArray[1].transform.position) || DetectionCollision(raycastArray[2].transform.position))
         {
             Debug.Log("COLLISION, tu avances pas");
         }
@@ -37,7 +37,7 @@ public class Civilian : MonoBehaviour {
     private bool DetectionCollision(Vector3 origins)
     {
         RaycastHit hit;
-        if (Physics.Raycast(origins, direction, out hit))
+        if (Physics.Raycast(origins, direction, out hit, 500f,1 << 8))
             return true;
         else
             return false;
