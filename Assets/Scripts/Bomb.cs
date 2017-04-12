@@ -9,6 +9,10 @@ public class Bomb : MonoBehaviour {
 		Collider[] colliders = Physics.OverlapSphere(transform.position, 10f);
 		foreach(Collider hit in colliders)
 		{
+			//if(LayerMask.NameToLayer("Bomb"))
+			//{
+			//	Invoke("DoSomething", 2)
+			//}
 			Rigidbody rb = hit.GetComponent<Rigidbody>();
 
 			if(rb != null)
