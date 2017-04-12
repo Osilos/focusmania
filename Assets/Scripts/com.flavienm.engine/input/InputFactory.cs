@@ -18,9 +18,8 @@ namespace com.flavienm.engine.input
 
         private static void CreateInputObject(bool tobii)
         {
-                GameObjectUtils.CreateGameObjectWithScript<InputTobii> ("InputTobii");
-           
-                GameObjectUtils.CreateGameObjectWithScript<InputDesktop>("InputDesktop");
+            GameObjectUtils.CreateGameObjectWithScript<InputTobii> ("InputTobii");
+            GameObjectUtils.CreateGameObjectWithScript<InputDesktop>("InputDesktop");
         }
 
         private static bool hasEyeTracking ()
