@@ -66,7 +66,9 @@ public class Civilian : MonoBehaviour
         {
             Debug.Log("ouloulou l'escalier");
             startPoints.RemoveAt(0);
-            transform.position = startPoints[0].position;
+            if(startPoints.Count != 0)
+                transform.position = startPoints[0].position;
+
         }
     }
 }
