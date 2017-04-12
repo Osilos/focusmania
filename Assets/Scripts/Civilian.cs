@@ -6,7 +6,8 @@ public class Civilian : MonoBehaviour
 {
 
     Vector3 direction;
-    private GameObject[] raycastArray = new GameObject[3];
+    [SerializeField]
+    private GameObject[] raycastArray;
     [SerializeField]
     private List<Transform> startPoints = new List<Transform>();
     [SerializeField]
@@ -18,12 +19,12 @@ public class Civilian : MonoBehaviour
     {
 
         direction = Vector3.right;
-        int childrenNumber = transform.childCount;
+        /*int childrenNumber = transform.childCount;
         Debug.Log(childrenNumber);
         for (int i = 0; i < childrenNumber; i++)
         {
             raycastArray[i] = transform.GetChild(i).gameObject;
-        }
+        }*/
 
     }
 
