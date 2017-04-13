@@ -8,12 +8,13 @@ namespace com.flavienm.engine
     {
         public delegate void PlayerEvent();
         public static PlayerEvent MarkPoint;
-        public static PlayerEvent Killed;
+        public static PlayerEvent Win;
+        public static PlayerEvent Lose;
 
-        [SerializeField]
-        public Transform startTransform;
+		//[SerializeField]
+		//public Transform startTransform;
 
-        private int layerKill {
+		private int layerKill {
             get { return LayerMask.NameToLayer("KillObject"); }
         }
         private int layerMark {
@@ -22,8 +23,8 @@ namespace com.flavienm.engine
 
         protected override void OnNewGame()
         {
-            transform.position = startTransform.position;
-            transform.rotation = startTransform.rotation;
+            //transform.position = startTransform.position;
+            //transform.rotation = startTransform.rotation;
         }
 
         private void OnTriggerEnter(Collider collider)
@@ -40,7 +41,7 @@ namespace com.flavienm.engine
         {
             if (colliderLayer == layerKill)
             {
-                OnKill();
+                OnLose();
             }
             else if (colliderLayer == layerMark)
             {
@@ -48,24 +49,37 @@ namespace com.flavienm.engine
             }
         }
 
-        protected virtual void OnKill ()
+        protected virtual void OnLose ()
         {
-            DispatchKillEvent();
+            DispatchLoseEvent();
         }
 
-        protected virtual void OnMark ()
+		protected virtual void OnWin()
+		{
+			DispatchLoseEvent();
+		}
+
+
+		protected virtual void OnMark ()
         {
             DispatchMarkEvent();
         }
 
-        private void DispatchKillEvent ()
+        private void DispatchWinEvent ()
         {
-            if (Killed != null)
+            if (Win != null)
             {
-                Killed();
+                Win();
             }
         }
-        private void DispatchMarkEvent ()
+		private void DispatchLoseEvent()
+		{
+			if(Lose != null)
+			{
+				Lose();
+			}
+		}
+		private void DispatchMarkEvent ()
         {
             if (MarkPoint != null)
             {

@@ -12,7 +12,9 @@ namespace com.flavienm.engine.ui
         private GameObject startHud;
         [SerializeField]
         private GameObject gameOverHud;
-        [SerializeField]
+		[SerializeField]
+		private GameObject winHud;
+		[SerializeField]
         private GameObject gameHud;
 		[SerializeField]
 		private GameObject creditsHud;
@@ -36,7 +38,8 @@ namespace com.flavienm.engine.ui
             gameOverHud.SetActive(false);
             gameHud.SetActive(false);
 			creditsHud.SetActive(false);
-        }
+			winHud.SetActive(false);
+		}
 
 		protected override void OnCredits()
 		{
@@ -45,7 +48,7 @@ namespace com.flavienm.engine.ui
 			gameOverHud.SetActive(false);
 			gameHud.SetActive(false);
 			creditsHud.SetActive(true);
-
+			winHud.SetActive(false);
 		}
 
 		protected override void OnGameOver()
@@ -54,14 +57,25 @@ namespace com.flavienm.engine.ui
             gameOverHud.SetActive(true);
             gameHud.SetActive(false);
 			creditsHud.SetActive(false);
+			winHud.SetActive(false);
 		}
 
-        protected override void OnNewGame()
+		protected override void OnWin()
+		{
+			startHud.SetActive(false);
+			gameOverHud.SetActive(false);
+			gameHud.SetActive(false);
+			creditsHud.SetActive(false);
+			winHud.SetActive(true);
+		}
+
+		protected override void OnNewGame()
         {
             startHud.SetActive(false);
             gameOverHud.SetActive(false);
             gameHud.SetActive(true);
 			creditsHud.SetActive(false);
+			winHud.SetActive(false);
 		}
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 using com.flavienm.engine;
 using com.flavienm.engine.input;
 
-public class FollowEye : MonoBehaviour {
+public class FollowEye : Player {
 
 	public static bool laser = false;
 
@@ -14,9 +14,12 @@ public class FollowEye : MonoBehaviour {
 
 	private Coroutine currentCoroutine;
 
+	public bool isPlaying;
+
 	void Start () {
 		com.flavienm.engine.input.Input.positionInput += OnMovement;
 		com.flavienm.engine.input.Input.space += OnSpace;
+		GameManager.NewGame += SwitchState;
 		LaserParticle.gameObject.SetActive(false);
 	}
 
@@ -41,6 +44,10 @@ public class FollowEye : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
+		if (!isPlaying)
+		{
+			return;
+		}
 		if (laser)
 		{
 			if (currentCoroutine != null)
@@ -68,5 +75,10 @@ public class FollowEye : MonoBehaviour {
 		yield return new WaitForSeconds(0.06f);
 		SmokeParticle.Stop(false);
 		currentCoroutine = null;
+	}
+
+	public void SwitchState()
+	{
+		isPlaying = !isPlaying;
 	}
 }

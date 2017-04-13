@@ -14,10 +14,12 @@ namespace com.flavienm.engine
         private static float minDifficulty = 1f;
         private static float maxdifficulty = 2f;
 
-        public static GameEvent NewGame;
+		public static GameEvent NewGame;
         public static GameEvent GameOver;
-        public static GameEvent Menu;
+        public static GameEvent Win;
+		public static GameEvent Menu;
         public static GameEvent Credits;
+        public static GameEvent BlowBombs;
 
 		public AnimationCurve difficultyCurve;
 
@@ -38,12 +40,17 @@ namespace com.flavienm.engine
         {
             Application.targetFrameRate = 30;
             
-            com.flavienm.engine.Player.Killed += OnPlayerKilled;
+            com.flavienm.engine.Player.Win += OnPlayerWin;
             ActionHUD.OnPlay += StartGame;
             ActionHUD.OnMenu += GoMenu;
             ActionHUD.OnCredits += GoCredits;
 			DispatchMenuEvent();
         }
+
+		public void LaunchBlowBombs()
+		{
+			BlowBombs();
+		}
 
         public void GoMenu()
         {
@@ -57,21 +64,32 @@ namespace com.flavienm.engine
 
 		public void StartGame()
         {
+			
             DispatchNewGameEvent();
         }
 
-        private void OnPlayerKilled()
-        {
-            currentDifficulty = 0f;
-            difficulty = 0f;
+		private void OnPlayerWin()
+		{
+			// Anim player -> anim victoire
+			//
+			//            if (isSoundEnabel)
+			//                loseSound.Play();
 
-//            if (isSoundEnabel)
-//                loseSound.Play();
-            
-            DispatchGameOverEvent();
-        }
+			DispatchWinEvent();
+		}
 
-        private void DispatchNewGameEvent()
+		private void OnPlayerLose()
+		{
+			LaunchBlowBombs();
+			// FAIRE TOUT EXPLOSER
+			//
+			//            if (isSoundEnabel)
+			//                loseSound.Play();
+
+			DispatchGameOverEvent();
+		}
+
+		private void DispatchNewGameEvent()
         {
             if (NewGame != null)
             {
@@ -86,7 +104,15 @@ namespace com.flavienm.engine
             }
         }
 
-        private void DispatchMenuEvent()
+		private void DispatchWinEvent()
+		{
+			if(Win != null)
+			{
+				Win();
+			}
+		}
+
+		private void DispatchMenuEvent()
         {
             if (Menu != null)
             {
