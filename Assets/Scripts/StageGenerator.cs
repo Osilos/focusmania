@@ -28,6 +28,8 @@ public class StageGenerator : MonoBehaviour {
 	private float lastRowGenerate;
     [SerializeField]
     private float aupif;
+    [SerializeField]
+    private float offSetToDestroy;
 
     private void Start ()
 	{
@@ -67,7 +69,7 @@ public class StageGenerator : MonoBehaviour {
 
 	private void Update ()
 	{
-		float currentRow = GetCurrentRow() + 30;
+		float currentRow = GetCurrentRow() + offSetToDestroy;
 		if (lastRowGenerate < currentRow)
 		{
 			Vector3 position = GetPositionRow(currentRow);
