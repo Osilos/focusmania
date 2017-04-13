@@ -23,6 +23,18 @@ public class FollowEye : Player {
 		LaserParticle.gameObject.SetActive(false);
 	}
 
+	void OnDestroy ()
+	{
+		com.flavienm.engine.input.Input.positionInput -= OnMovement;
+		com.flavienm.engine.input.Input.space -= OnSpace;
+		GameManager.NewGame -= SwitchState;
+
+	}
+
+	protected override void OnNewGame()
+	{
+	}
+
 	private void OnSpace ()
 	{
 		laser = !laser;
@@ -65,6 +77,7 @@ public class FollowEye : Player {
 
 			if (other.gameObject.layer == LayerMask.NameToLayer("Bomb"))
 			{
+				OnLose();
 				other.GetComponent<Bomb>().Hit(false);
 			}
 		}
