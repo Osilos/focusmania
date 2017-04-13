@@ -92,7 +92,8 @@ public class TriangleExplosion : MonoBehaviour
 		else
 		{
 			GetComponent<Renderer>().enabled = true;
-			gameObject.SetActive(false);
+            GetComponent<Collider>().enabled = true;
+            gameObject.SetActive(false);
 		}
 
 	}

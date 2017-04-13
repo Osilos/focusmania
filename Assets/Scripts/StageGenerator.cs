@@ -26,8 +26,10 @@ public class StageGenerator : MonoBehaviour {
 	private List<GameObject> quads = new List<GameObject>();
 
 	private float lastRowGenerate;
+    [SerializeField]
+    private float aupif;
 
-	private void Start ()
+    private void Start ()
 	{
 		textureSideSize = new Vector2(1f / (buildingSize.x * stageSize.x), 1f / (buildingSize.y * stageSize.y));
 		for (int i = 0; i < buildingSize.y; i++)
@@ -60,7 +62,7 @@ public class StageGenerator : MonoBehaviour {
 
 	private Vector3 GetPositionRow (float row)
 	{
-		return new Vector3(-(stageSize.x * wallPartSize.x / 2), -row * wallPartSize.y, -5f);
+		return new Vector3(-(stageSize.x * wallPartSize.x / 2), -row * wallPartSize.y + aupif, -5f);
 	}
 
 	private void Update ()
@@ -75,12 +77,11 @@ public class StageGenerator : MonoBehaviour {
 
 	private float GetCurrentRow ()
 	{
-		return Mathf.Abs(Mathf.Ceil(transform.position.y / wallPartSize.y));
+		return Mathf.Abs(-aupif*2 + Mathf.Ceil(transform.position.y / wallPartSize.y));
 	}
 
 	private void GenerateRow (Vector3 position, float row)
 	{
-		Debug.Log("Generate ROW");
 		for (int x = 0; x < stageSize.x; x++)
 		{
 			GameObject quad = CreateQuad(position);
