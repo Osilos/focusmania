@@ -76,7 +76,9 @@ public class Civilian : Player
 		if (other.gameObject.tag == "Exit")
         {
             startPoints.RemoveAt(0);
-            transform.position = startPoints[0].position;
+            if(startPoints.Count != 0)
+                transform.position = startPoints[0].position;
+
         }
     }
 }

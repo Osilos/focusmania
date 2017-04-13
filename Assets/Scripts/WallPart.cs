@@ -16,21 +16,38 @@ public class WallPart : MonoBehaviour {
 
 	private Renderer render;
 
+	private Transform cameraTransform;
+
+	bool material1;
+	bool material0;
+
 	// Use this for initialization
 	void Start () {
 		render = GetComponent<Renderer>();
 		playerTransform = GameObject.Find(playerName).transform;
+		cameraTransform = Camera.main.transform;
+		material0 = true;
+		material1 = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Vector2.Distance(playerTransform.position, transform.position) > distanceToPlayer || FollowEye.laser)
+		if (transform.position.y - cameraTransform.position.y > 15f)
+			gameObject.SetActive(false);
+
+		if ((Vector2.Distance(playerTransform.position, transform.position) > distanceToPlayer || FollowEye.laser))
 		{
-		   render.material = materials[1];
+			if (material1)
+				return;
+			render.material = materials[1];
+			material0 = false;
+			material1 = true;
 		}
-		else
+		else if (!material0)
 		{
 			render.material = materials[0];
+			material0 = true;
+			material1 = false;
 		}
 	}
 }

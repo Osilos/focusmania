@@ -60,7 +60,7 @@ public class FollowEye : Player {
 			currentCoroutine = StartCoroutine(LaunchSmokeLaser());
 			if (other.gameObject.layer == LayerMask.NameToLayer("Destructible"))
 			{
-				StartCoroutine(other.gameObject.GetComponent<TriangleExplosion>().SplitMesh(true));
+				StartCoroutine(other.gameObject.GetComponent<TriangleExplosion>().SplitMesh(false));
 			}
 
 			if (other.gameObject.layer == LayerMask.NameToLayer("Bomb"))

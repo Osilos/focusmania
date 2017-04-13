@@ -85,9 +85,15 @@ public class TriangleExplosion : MonoBehaviour
 		GetComponent<Renderer>().enabled = false;
 
 		yield return new WaitForSeconds(1.0f);
-		if(destroy == true)
+		if (destroy)
 		{
 			Destroy(gameObject);
+		}
+		else
+		{
+			GetComponent<Renderer>().enabled = true;
+            GetComponent<Collider>().enabled = true;
+            gameObject.SetActive(false);
 		}
 
 	}
