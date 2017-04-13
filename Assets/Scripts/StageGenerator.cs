@@ -7,36 +7,44 @@ public class StageGenerator : MonoBehaviour {
 	[SerializeField]
 	private GameObject prefabQuad;
 	[SerializeField]
-	private Vector2 textureSize;
+	private Vector2 buildingSize;
 	[SerializeField]
-	private Vector2 size;
-	[SerializeField]
-	private Texture texture;
-
+	private Vector2 stageSize;
 	[SerializeField]
 	private Vector2 wallPartSize;
-	
 
-	public void Generate ()
+	private Vector2 textureSideSize;
+
+	private void Start ()
 	{
-		GameObject parent = new GameObject();
-		Vector3 position = new Vector3(-(size.x * wallPartSize.x / 2), -(size.y * wallPartSize.y / 2), -5f);
-		float sideSizeX = 1f / size.x;
-		float sideSizeY = 1f / size.y;
+		textureSideSize = new Vector2(1f / (buildingSize.x * stageSize.x), 1f / (buildingSize.y * stageSize.y));
+		Generate(new int[3] { 0, 1, 2 });
+	}
 
-		for (int x = 0; x < size.x; x++)
+	public void Generate (int[] stages)
+	{
+		for (int i = 0; i < stages.Length; i++)
 		{
-			for (int y = 0; y < size.y; y++)
+			int stage = stages[i];
+			Vector3 position = 
+				new Vector3(-(stageSize.x * wallPartSize.x / 2), (stageSize.y * wallPartSize.y) * -stage, -5f);
+			GenerateStage(stage, position);
+		}
+	}
+
+	private void GenerateStage (int id, Vector3 position)
+	{
+		float yStart = position.y;
+		GameObject parent = new GameObject();
+		parent.name = "Stage : " + id;
+		for (int x = 0; x < stageSize.x; x++)
+		{
+			for (int y = 0; y < stageSize.y; y++)
 			{
 				GameObject quad = CreateQuad(position);
 				quad.transform.SetParent(parent.transform);
-				Mesh mesh = quad.GetComponent<MeshFilter>().sharedMesh;
-				List<Vector2> uvs = new List<Vector2>();
-
-				uvs.Add(new Vector2(x * sideSizeX, y * sideSizeY));
-				uvs.Add(new Vector2(x * sideSizeX + sideSizeX, y * sideSizeY + sideSizeY));
-				uvs.Add(new Vector2(x * sideSizeX + sideSizeX, y * sideSizeY));
-				uvs.Add(new Vector2(x * sideSizeX, y * sideSizeY + sideSizeY));
+				Mesh mesh = quad.GetComponent<MeshFilter>().mesh;
+				List<Vector2> uvs = GetUvsFor(x, (buildingSize.y * stageSize.y) - id * stageSize.y - y);
 
 				mesh.uv = uvs.ToArray();
 				mesh.RecalculateNormals();
@@ -44,9 +52,19 @@ public class StageGenerator : MonoBehaviour {
 				position.y += wallPartSize.y;
 			}
 
-			position.y = -(size.y * wallPartSize.y / 2);
+			position.y = yStart;
 			position.x += wallPartSize.x;
 		}
+	}
+
+	private List<Vector2> GetUvsFor (float x, float y)
+	{
+		List<Vector2> uvs = new List<Vector2>();
+		uvs.Add(new Vector2(x * textureSideSize.x, y * textureSideSize.y));
+		uvs.Add(new Vector2(x * textureSideSize.x + textureSideSize.x, y * textureSideSize.y - textureSideSize.y));
+		uvs.Add(new Vector2(x * textureSideSize.x + textureSideSize.x, y * textureSideSize.y));
+		uvs.Add(new Vector2(x * textureSideSize.x, y * textureSideSize.y - textureSideSize.y));
+		return uvs;
 	}
 
 	private GameObject CreateQuad (Vector3 position)
