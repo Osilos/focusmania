@@ -18,7 +18,7 @@ namespace com.flavienm.engine.input
 
         private static void CreateInputObject(bool tobii)
         {
-            Debug.Log(tobii);
+            //Debug.Log(tobii);
             if(tobii)
                 GameObjectUtils.CreateGameObjectWithScript<InputTobii> ("InputTobii");
            else
