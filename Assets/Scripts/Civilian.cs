@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using com.flavienm.engine;
 
-public class Civilian : MonoBehaviour
+public class Civilian : Player
 {
 
     Vector3 direction;
@@ -14,11 +15,14 @@ public class Civilian : MonoBehaviour
     private List<Transform> endPoints = new List<Transform>();
     [SerializeField]
     private float speed;
-    // Use this for initialization
-    void Start()
-    {
 
-        direction = Vector3.right;
+	private bool isPlaying;
+
+	// Use this for initialization
+	void Start()
+    {
+		GameManager.NewGame += SwitchState;
+		direction = Vector3.right;
         /*int childrenNumber = transform.childCount;
         Debug.Log(childrenNumber);
         for (int i = 0; i < childrenNumber; i++)
@@ -38,14 +42,22 @@ public class Civilian : MonoBehaviour
 
     void FixedUpdate()
     {
+		if (!isPlaying)
+		{
+			return;
+		}
         if (!DetectionCollision(raycastArray[0].transform.position) && !DetectionCollision(raycastArray[1].transform.position) && !DetectionCollision(raycastArray[2].transform.position))
         {
-            Debug.Log("COLLISION, tu avances pas");
             transform.position += new Vector3(direction.x * Time.deltaTime * speed, 0f, 0f);
         }
     }
 
-    private bool DetectionCollision(Vector3 origins)
+	public void SwitchState()
+	{
+		isPlaying = !isPlaying;
+	}
+
+	private bool DetectionCollision(Vector3 origins)
     {
         RaycastHit hit;
         if (Physics.Raycast(origins, direction, out hit, 100f, 1 << 8))
@@ -61,10 +73,8 @@ public class Civilian : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger enter");
-        if (other.gameObject.tag == "Exit")
+		if (other.gameObject.tag == "Exit")
         {
-            Debug.Log("ouloulou l'escalier");
             startPoints.RemoveAt(0);
             transform.position = startPoints[0].position;
         }

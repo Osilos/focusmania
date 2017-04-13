@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace com.flavienm.engine.ui
 {
@@ -34,5 +35,10 @@ namespace com.flavienm.engine.ui
 				OnCredits();
 			}
 		}
+
+		public void OnReplay()
+		{
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		} 
 	}
 }
