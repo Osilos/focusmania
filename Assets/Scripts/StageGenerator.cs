@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class StageGenerator : MonoBehaviour {
 
@@ -13,12 +14,36 @@ public class StageGenerator : MonoBehaviour {
 	[SerializeField]
 	private Vector2 wallPartSize;
 
+	[SerializeField]
+	private float offSetToCreate;
+
 	private Vector2 textureSideSize;
+
+	private int lastStageGenerate;
+
+	private List<GameObject> stages = new List<GameObject>();
+
+	private List<GameObject> quads = new List<GameObject>();
+
+	private float lastRowGenerate;
 
 	private void Start ()
 	{
 		textureSideSize = new Vector2(1f / (buildingSize.x * stageSize.x), 1f / (buildingSize.y * stageSize.y));
-		Generate(new int[3] { 0, 1, 2 });
+		for (int i = 0; i < buildingSize.y; i++)
+		{
+			GameObject stage = new GameObject();
+			stage.name = "Stage : " + i;
+			stage.transform.position = new Vector3(-(stageSize.x * wallPartSize.x / 2), (stageSize.y * wallPartSize.y) * -i, -5f);
+			stages.Add(stage);
+		}
+
+		for (int i = 0; i < stageSize.x * stageSize.y * 4; i++)
+		{
+			InstantiateQuad(Vector3.zero, false);
+		}
+
+		Generate(new int[3] { 0, 1, 2});
 	}
 
 	public void Generate (int[] stages)
@@ -26,34 +51,56 @@ public class StageGenerator : MonoBehaviour {
 		for (int i = 0; i < stages.Length; i++)
 		{
 			int stage = stages[i];
-			Vector3 position = 
-				new Vector3(-(stageSize.x * wallPartSize.x / 2), (stageSize.y * wallPartSize.y) * -stage, -5f);
-			GenerateStage(stage, position);
+			Vector3 position = GetPositionRow(i * stageSize.y);
+				
+			GenerateStage(stage);
+			lastStageGenerate = stage;
 		}
 	}
 
-	private void GenerateStage (int id, Vector3 position)
+	private Vector3 GetPositionRow (float row)
 	{
-		float yStart = position.y;
-		GameObject parent = new GameObject();
-		parent.name = "Stage : " + id;
+		return new Vector3(-(stageSize.x * wallPartSize.x / 2), -row * wallPartSize.y, -5f);
+	}
+
+	private void Update ()
+	{
+		float currentRow = GetCurrentRow() + 30;
+		if (lastRowGenerate < currentRow)
+		{
+			Vector3 position = GetPositionRow(currentRow);
+			GenerateRow(position, currentRow);
+		}
+	}
+
+	private float GetCurrentRow ()
+	{
+		return Mathf.Abs(Mathf.Ceil(transform.position.y / wallPartSize.y));
+	}
+
+	private void GenerateRow (Vector3 position, float row)
+	{
+		Debug.Log("Generate ROW");
 		for (int x = 0; x < stageSize.x; x++)
 		{
-			for (int y = 0; y < stageSize.y; y++)
-			{
-				GameObject quad = CreateQuad(position);
-				quad.transform.SetParent(parent.transform);
-				Mesh mesh = quad.GetComponent<MeshFilter>().mesh;
-				List<Vector2> uvs = GetUvsFor(x, (buildingSize.y * stageSize.y) - id * stageSize.y - y);
+			GameObject quad = CreateQuad(position);
 
-				mesh.uv = uvs.ToArray();
-				mesh.RecalculateNormals();
+			Mesh mesh = quad.GetComponent<MeshFilter>().mesh;
+			List<Vector2> uvs = GetUvsFor(x, row);
 
-				position.y += wallPartSize.y;
-			}
+			mesh.uv = uvs.ToArray();
+			mesh.RecalculateNormals();
 
-			position.y = yStart;
 			position.x += wallPartSize.x;
+		}
+		lastRowGenerate = row;
+	}
+
+	private void GenerateStage (int id)
+	{
+		for (int y = 0; y < stageSize.y; y++)
+		{
+			GenerateRow(GetPositionRow(id * stageSize.y + y), id * stageSize.y + y);
 		}
 	}
 
@@ -69,6 +116,21 @@ public class StageGenerator : MonoBehaviour {
 
 	private GameObject CreateQuad (Vector3 position)
 	{
-		return Instantiate(prefabQuad, position, prefabQuad.transform.rotation);
+		GameObject quad = quads.Find(x => x.activeSelf == false);
+		if (quad)
+		{
+			quad.SetActive(true);
+			quad.transform.position = position;
+			return quad;
+		}
+		return InstantiateQuad(position, true);
+	}
+
+	private GameObject InstantiateQuad (Vector3 position, bool active)
+	{
+		GameObject quad = Instantiate(prefabQuad, position, prefabQuad.transform.rotation);
+		quads.Add(quad);
+		quad.SetActive(active);
+		return quad;
 	}
 }
