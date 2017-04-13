@@ -16,7 +16,7 @@ public class StartScrolling : MonoBehaviour {
 		
 	}
 
-    void OnCollisionEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
         Debug.Log("TA MERE LE SCRIPT");
         mainCamera.GetComponent<ScrollingCamera>().enabled = true;
