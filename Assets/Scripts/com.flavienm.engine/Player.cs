@@ -4,55 +4,56 @@ using System;
 
 namespace com.flavienm.engine
 {
-    public class Player : EngineObject
-    {
-        public delegate void PlayerEvent();
-        public static PlayerEvent MarkPoint;
-        public static PlayerEvent Win;
-        public static PlayerEvent Lose;
+	public class Player : EngineObject
+	{
+		public delegate void PlayerEvent();
+		public static PlayerEvent MarkPoint;
+		public static PlayerEvent Win;
+		public static PlayerEvent Lose;
 
-		//[SerializeField]
-		//public Transform startTransform;
+		[SerializeField]
+		public Transform startTransform;
 
 		private int layerKill {
-            get { return LayerMask.NameToLayer("KillObject"); }
-        }
-        private int layerMark {
-            get { return LayerMask.NameToLayer("MarkObject"); }
-        }
+			get { return LayerMask.NameToLayer("KillObject"); }
+		}
+		private int layerMark {
+			get { return LayerMask.NameToLayer("MarkObject"); }
+		}
 
-        protected override void OnNewGame()
-        {
-            //transform.position = startTransform.position;
-            //transform.rotation = startTransform.rotation;
-        }
+		protected override void OnNewGame()
+		{
+			transform.position = startTransform.position;
+			transform.rotation = startTransform.rotation;
+		}
 
-        private void OnTriggerEnter(Collider collider)
-        {
-            OnHitCollider(collider.gameObject.layer);
-        }
+		private void OnTriggerEnter(Collider collider)
+		{
+			OnHitCollider(collider.gameObject.layer);
+		}
 
-        private void OnTriggerEnter2D(Collider2D collider)
-        {
-            OnHitCollider(collider.gameObject.layer);
-        }
+		private void OnTriggerEnter2D(Collider2D collider)
+		{
+			OnHitCollider(collider.gameObject.layer);
+		}
 
-        private void OnHitCollider (int colliderLayer)
-        {
-            if (colliderLayer == layerKill)
-            {
-                OnLose();
-            }
-            else if (colliderLayer == layerMark)
-            {
-                OnMark();
-            }
-        }
+		private void OnHitCollider (int colliderLayer)
+		{
+			if (colliderLayer == layerKill)
+			{
+				OnLose();
+			}
+			else if (colliderLayer == layerMark)
+			{
+				OnMark();
+			}
+		}
 
-        protected virtual void OnLose ()
-        {
-            DispatchLoseEvent();
-        }
+		protected virtual void OnLose ()
+		{
+			Debug.Log("ON LOSE");
+			DispatchLoseEvent();
+		}
 
 		protected virtual void OnWin()
 		{
@@ -61,17 +62,17 @@ namespace com.flavienm.engine
 
 
 		protected virtual void OnMark ()
-        {
-            DispatchMarkEvent();
-        }
+		{
+			DispatchMarkEvent();
+		}
 
-        private void DispatchWinEvent ()
-        {
-            if (Win != null)
-            {
-                Win();
-            }
-        }
+		protected void DispatchWinEvent ()
+		{
+			if (Win != null)
+			{
+				Win();
+			}
+		}
 		private void DispatchLoseEvent()
 		{
 			if(Lose != null)
@@ -80,11 +81,11 @@ namespace com.flavienm.engine
 			}
 		}
 		private void DispatchMarkEvent ()
-        {
-            if (MarkPoint != null)
-            {
-                MarkPoint();
-            }
-        }
-    }
+		{
+			if (MarkPoint != null)
+			{
+				MarkPoint();
+			}
+		}
+	}
 }

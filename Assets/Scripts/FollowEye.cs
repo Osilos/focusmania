@@ -21,21 +21,43 @@ public class FollowEye : Player {
 		com.flavienm.engine.input.Input.space += OnSpace;
 		GameManager.NewGame += SwitchState;
 		LaserParticle.gameObject.SetActive(false);
+        StartCoroutine(ReActivateCollider());
+    }
+
+	void OnDestroy ()
+	{
+		com.flavienm.engine.input.Input.positionInput -= OnMovement;
+		com.flavienm.engine.input.Input.space -= OnSpace;
+		GameManager.NewGame -= SwitchState;
+
+	}
+
+	protected override void OnNewGame()
+	{
 	}
 
 	private void OnSpace ()
 	{
 		laser = !laser;
-		if(laser)
+		
+		if (laser)
 		{
 			LaserParticle.gameObject.SetActive(true);
-		}
+            StartCoroutine(ReActivateCollider());
+        }
 		else
 		{
 			LaserParticle.gameObject.SetActive(false);
 		}
 	}
-	
+
+	IEnumerator ReActivateCollider ()
+	{
+		GetComponent<Collider>().enabled = false;
+		yield return new WaitForSeconds(0.05f);
+		GetComponent<Collider>().enabled = true;
+	}
+
 	private void OnMovement (Vector3 position)
 	{
 		position.z = 0f;
@@ -65,7 +87,7 @@ public class FollowEye : Player {
 
 			if (other.gameObject.layer == LayerMask.NameToLayer("Bomb"))
 			{
-				OnGameOver();
+				OnLose();
 				other.GetComponent<Bomb>().Hit(false);
 			}
 		}
@@ -80,6 +102,7 @@ public class FollowEye : Player {
 
 	public void SwitchState()
 	{
-		isPlaying = !isPlaying;
+        StartCoroutine(ReActivateCollider());
+        isPlaying = !isPlaying;
 	}
 }

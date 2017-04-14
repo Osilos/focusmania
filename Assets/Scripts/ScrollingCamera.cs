@@ -1,27 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using com.flavienm.engine;
 
-public class ScrollingCamera : MonoBehaviour {
+public class ScrollingCamera : Player {
 
-    public float speed = 1.5f;
-    
+	public float speed = 1.5f;
 
+	public float yLimit;
 
-	// Use this for initialization
-	void Start () {
-		
+	public int numberOflevel;
+	public int levelBeforeScroll;
+	[SerializeField]
+	private int mark;
+
+	protected override void OnNewGame()
+	{
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	protected override void OnMarkPoint()
+	{
+		base.OnMarkPoint();
+		Debug.Log("Hello");
+		mark++;
+		if (mark == numberOflevel)
+			DispatchWinEvent();
+	}
+
+	private void Update () {
 		scrollingMovement ();
-		
 	}
 
-	void scrollingMovement(){
-        float scrollingSpeed = Time.deltaTime *speed;
-        transform.position += new Vector3 (0,-scrollingSpeed, 0);
-        
-    }
+	private void scrollingMovement(){
+		if (mark < levelBeforeScroll)
+			return;
+		if (transform.position.y > -yLimit)
+		{
+			float scrollingSpeed = Time.deltaTime * speed;
+			transform.position += new Vector3(0, -scrollingSpeed, 0);
+		}
+		
+	}
 }
