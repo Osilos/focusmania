@@ -16,6 +16,10 @@ public class FollowEye : Player {
 	private Coroutine currentCoroutine;
 
 	public bool isPlaying;
+    [SerializeField]
+    private AudioSource laserSound;
+    [SerializeField]
+    private AudioSource xRaySound;
 
 	void Start () {
 		com.flavienm.engine.input.Input.positionInput += OnMovement;
@@ -51,12 +55,17 @@ public class FollowEye : Player {
 		
 		if (laser)
 		{
+            laserSound.Play();
+            xRaySound.Stop();
 			LaserParticle.gameObject.SetActive(true);
 			StartCoroutine(ReActivateCollider());
 		}
 		else
 		{
-			LaserParticle.gameObject.SetActive(false);
+            laserSound.Stop();
+            xRaySound.Play();
+            xRaySound.SetScheduledEndTime(AudioSettings.dspTime + (5));
+            LaserParticle.gameObject.SetActive(false);
 		}
 	}
 
