@@ -120,13 +120,12 @@ public class FollowEye : Player {
 
 			if(other.CompareTag("Pigeon"))
 			{
-				if(other.GetComponent<GAFMovieClip>().currentSequence.name != "Pigeon_vole")
+				if(other.GetComponent<GAFMovieClip>().currentSequence.name == "Pigeon_vole")
 				{
 					other.GetComponent<GAFMovieClip>().setSequence("Pigeon_mort", true);
-					Vector3 explosionPos = new Vector3(other.transform.position.x + Random.Range(-0.5f, 0.5f), other.transform.position.y + Random.Range(0f, 0.5f), other.transform.position.z + Random.Range(-0.5f, 0.5f));
-					other.gameObject.AddComponent<Rigidbody>().AddExplosionForce(Random.Range(300, 500), explosionPos, 5);
+					Vector3 explosionPos = new Vector3(other.transform.position.x + Random.Range(-0.5f, 0.5f), other.transform.position.y + Random.Range(-0.5f, 0f), other.transform.position.z + Random.Range(-0.5f, 0.5f));
+					other.gameObject.AddComponent<Rigidbody>().AddExplosionForce(Random.Range(800, 1000), explosionPos, 5);
 					other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
-					Destroy(other.gameObject, 5f);
 				}
 			}
 		}
