@@ -20,7 +20,7 @@ public class WallPart : MonoBehaviour {
 
 	bool material1;
 	bool material0;
-    [SerializeField]
+    [SerializeField]    
     private float offSetToDestroy;
 
     // Use this for initialization
