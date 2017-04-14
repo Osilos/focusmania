@@ -11,7 +11,8 @@ namespace com.flavienm.engine.ui
 		public static EventHUD OnPlay;
 		public static EventHUD OnMenu;
 		public static EventHUD OnCredits;
-			
+		public static EventHUD OnQuitCredits;
+
 		public void OnPlayButton ()
 		{
 			if (OnPlay != null)
@@ -34,6 +35,15 @@ namespace com.flavienm.engine.ui
 			{
 				OnCredits();
 			}
+		}
+
+		public void OnQuiCreditsButton()
+		{
+			if (OnQuitCredits != null)
+			{
+				OnQuitCredits();
+			}
+
 		}
 
 		public void OnReplay()
