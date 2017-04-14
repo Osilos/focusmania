@@ -15,6 +15,8 @@ public class Civilian : Player
 
 	[SerializeField]
 	private float speed;
+	[SerializeField]
+	private AudioSource crii;
 
 	private bool isPlaying;
 
@@ -27,6 +29,11 @@ public class Civilian : Player
 	
 	private void Update()
 	{
+		if (transform.position.y - Camera.main.transform.position.y > 15f)
+		{
+            OnLose();
+		}
+			
 		Debug.DrawRay(raycastArray[0].transform.position, direction * 100f, Color.white);
 		Debug.DrawRay(raycastArray[1].transform.position, direction * 100f, Color.yellow);
 		Debug.DrawRay(raycastArray[2].transform.position, direction * 100f, Color.red);
@@ -36,7 +43,8 @@ public class Civilian : Player
 	{
 		if (!isPlaying)
 			return;
-		if(GetComponent<GAFMovieClip>().currentSequence.name == "hit")
+		if(GetComponent<GAFMovieClip>().currentSequence.name == "hit" 
+			|| GetComponent<GAFMovieClip>().currentSequence.name == "danse")
 		{
 			return;
 		}
@@ -90,6 +98,14 @@ public class Civilian : Player
 		direction *= -1;
 	}
 
+	public void cri (bool have)
+	{
+		Debug.Log("CRI");
+		if (have)
+			crii.Play();
+		else crii.Stop();
+	}
+
 	void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.tag == "Exit")
@@ -99,6 +115,13 @@ public class Civilian : Player
 				OnMark();
 				transform.position = startPoints[mark].position;
 				mark++;
+			}
+			if (startPoints.Count == mark)
+			{
+				if (GetComponent<GAFMovieClip>().currentSequence.name != "danse")
+				{
+					GetComponent<GAFMovieClip>().setSequence("danse", true);
+				}
 			}
 		}
 	}

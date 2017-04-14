@@ -100,9 +100,9 @@ namespace com.flavienm.engine
 		}
 
 		private void DispatchNewGameEvent()
-        {
-            //lvlLoop.Play();
-            if (NewGame != null)
+		{
+			lvlLoop.Play();
+			if (NewGame != null)
 			{
 				NewGame();
 			}

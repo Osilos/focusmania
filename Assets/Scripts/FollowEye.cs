@@ -16,10 +16,10 @@ public class FollowEye : Player {
 	private Coroutine currentCoroutine;
 
 	public bool isPlaying;
-    [SerializeField]
-    private AudioSource laserSound;
-    [SerializeField]
-    private AudioSource xRaySound;
+	[SerializeField]
+	private AudioSource laserSound;
+	[SerializeField]
+	private AudioSource xRaySound;
 
 	void Start () {
 		com.flavienm.engine.input.Input.positionInput += OnMovement;
@@ -55,17 +55,17 @@ public class FollowEye : Player {
 		
 		if (laser)
 		{
-            //laserSound.Play();
-            //xRaySound.Stop();
+			laserSound.Play();
+			xRaySound.Stop();
 			LaserParticle.gameObject.SetActive(true);
 			StartCoroutine(ReActivateCollider());
 		}
 		else
 		{
-            //laserSound.Stop();
-            //xRaySound.Play();
-            //xRaySound.SetScheduledEndTime(AudioSettings.dspTime + (5));
-            LaserParticle.gameObject.SetActive(false);
+			laserSound.Stop();
+			xRaySound.Play();
+			xRaySound.SetScheduledEndTime(AudioSettings.dspTime + (5));
+			LaserParticle.gameObject.SetActive(false);
 		}
 	}
 
@@ -114,16 +114,17 @@ public class FollowEye : Player {
 				if(other.GetComponent<GAFMovieClip>().currentSequence.name != "hit")
 				{
 					other.GetComponent<GAFMovieClip>().setSequence("hit", true);
+					other.GetComponent<Civilian>().cri(true);
 				}
 			}
 
 			if(other.CompareTag("Pigeon"))
 			{
-				if(other.GetComponent<GAFMovieClip>().currentSequence.name == "Pigeon_vole")
+				if(other.GetComponent<GAFMovieClip>().currentSequence.name != "Pigeon_vole")
 				{
 					other.GetComponent<GAFMovieClip>().setSequence("Pigeon_mort", true);
 					Vector3 explosionPos = new Vector3(other.transform.position.x + Random.Range(-0.5f, 0.5f), other.transform.position.y + Random.Range(-0.5f, 0f), other.transform.position.z + Random.Range(-0.5f, 0.5f));
-					other.gameObject.AddComponent<Rigidbody>().AddExplosionForce(Random.Range(500, 800), explosionPos, 5);
+					other.gameObject.AddComponent<Rigidbody>().AddExplosionForce(Random.Range(800, 1000), explosionPos, 5);
 					other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
 				}
 			}
@@ -137,6 +138,7 @@ public class FollowEye : Player {
 			if(other.GetComponent<GAFMovieClip>().currentSequence.name == "hit")
 			{
 				other.GetComponent<GAFMovieClip>().setSequence("attente", true);
+				other.GetComponent<Civilian>().cri(false);
 			}
 		}
 	}
