@@ -4,6 +4,7 @@ using UnityEngine;
 
 using com.flavienm.engine;
 using com.flavienm.engine.input;
+using GAF.Core;
 
 public class FollowEye : Player {
 
@@ -97,6 +98,25 @@ public class FollowEye : Player {
 			{
 				OnLose();
 				other.GetComponent<Bomb>().Hit(false);
+			}
+
+			if(other.CompareTag("Civil"))
+			{
+				if(other.GetComponent<GAFMovieClip>().currentSequence.name != "hit")
+				{
+					other.GetComponent<GAFMovieClip>().setSequence("hit", true);
+				}
+			}
+		}
+	}
+
+	private void OnTriggerExit(Collider other)
+	{
+		if(other.CompareTag("Civil"))
+		{
+			if(other.GetComponent<GAFMovieClip>().currentSequence.name == "hit")
+			{
+				other.GetComponent<GAFMovieClip>().setSequence("attente", true);
 			}
 		}
 	}
