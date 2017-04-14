@@ -28,6 +28,8 @@ namespace com.flavienm.engine
 		private AudioSource loseSound;
 		[SerializeField]
 		private AudioSource markSound;
+		[SerializeField]
+		private AudioSource lvlLoop;
 		
 		private float increaseDifficultyStep = 0.03f;
 		private float currentDifficulty = 0f;
@@ -75,7 +77,6 @@ namespace com.flavienm.engine
 
 		public void StartGame()
 		{
-			
 			DispatchNewGameEvent();
 		}
 
@@ -99,8 +100,9 @@ namespace com.flavienm.engine
 		}
 
 		private void DispatchNewGameEvent()
-		{
-			if (NewGame != null)
+        {
+            lvlLoop.Play();
+            if (NewGame != null)
 			{
 				NewGame();
 			}

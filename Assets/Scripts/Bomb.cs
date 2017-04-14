@@ -7,6 +7,8 @@ public class Bomb : MonoBehaviour {
 	public float ExplosionRadius = 8f;
 	public float ExplosionDelay = 1f;
 
+    public AudioSource explosionSound;
+
 	private void Start()
 	{
 		GameManager.BlowBombs += LaunchEndExplosion;
@@ -37,6 +39,7 @@ public class Bomb : MonoBehaviour {
 
 	public void Explosion()
 	{
+        explosionSound.Play();
 		Collider[] colliders = Physics.OverlapSphere(transform.position, ExplosionRadius);
 		foreach(Collider hit in colliders)
 		{
