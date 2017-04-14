@@ -36,7 +36,8 @@ public class Civilian : Player
 	{
 		if (!isPlaying)
 			return;
-		if(GetComponent<GAFMovieClip>().currentSequence.name == "hit")
+		if(GetComponent<GAFMovieClip>().currentSequence.name == "hit" 
+			|| GetComponent<GAFMovieClip>().currentSequence.name == "danse")
 		{
 			return;
 		}
@@ -99,6 +100,13 @@ public class Civilian : Player
 				OnMark();
 				transform.position = startPoints[mark].position;
 				mark++;
+			}
+			if (startPoints.Count == mark)
+			{
+				if (GetComponent<GAFMovieClip>().currentSequence.name != "danse")
+				{
+					GetComponent<GAFMovieClip>().setSequence("danse", true);
+				}
 			}
 		}
 	}
