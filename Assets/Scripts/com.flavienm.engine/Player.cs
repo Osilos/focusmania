@@ -23,8 +23,8 @@ namespace com.flavienm.engine
 
 		protected override void OnNewGame()
 		{
-			transform.position = startTransform.position;
-			transform.rotation = startTransform.rotation;
+			//transform.position = startTransform.position;
+			//transform.rotation = startTransform.rotation;
 		}
 
 		private void OnTriggerEnter(Collider collider)
