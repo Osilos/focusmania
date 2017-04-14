@@ -31,7 +31,7 @@ public class Civilian : Player
 	{
 		if (transform.position.y - Camera.main.transform.position.y > 15f)
 		{
-            OnLose();
+			OnLose();
 		}
 			
 		Debug.DrawRay(raycastArray[0].transform.position, direction * 100f, Color.white);
