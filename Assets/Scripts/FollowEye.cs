@@ -65,6 +65,7 @@ public class FollowEye : Player {
 
 			if (other.gameObject.layer == LayerMask.NameToLayer("Bomb"))
 			{
+				OnGameOver();
 				other.GetComponent<Bomb>().Hit(false);
 			}
 		}

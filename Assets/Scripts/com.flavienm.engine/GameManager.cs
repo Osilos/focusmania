@@ -41,7 +41,8 @@ namespace com.flavienm.engine
             Application.targetFrameRate = 30;
             
             com.flavienm.engine.Player.Win += OnPlayerWin;
-            ActionHUD.OnPlay += StartGame;
+            com.flavienm.engine.Player.Lose += OnPlayerLose;
+			ActionHUD.OnPlay += StartGame;
             ActionHUD.OnMenu += GoMenu;
             ActionHUD.OnCredits += GoCredits;
 			DispatchMenuEvent();
@@ -78,7 +79,7 @@ namespace com.flavienm.engine
 			DispatchWinEvent();
 		}
 
-		private void OnPlayerLose()
+		public void OnPlayerLose()
 		{
 			LaunchBlowBombs();
 			// FAIRE TOUT EXPLOSER

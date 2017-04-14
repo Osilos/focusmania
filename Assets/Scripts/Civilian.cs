@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using com.flavienm.engine;
+using GAF;
+using GAF.Core;
 
 public class Civilian : Player
 {
@@ -23,14 +25,14 @@ public class Civilian : Player
     {
 		GameManager.NewGame += SwitchState;
 		direction = Vector3.right;
-        /*int childrenNumber = transform.childCount;
+		/*int childrenNumber = transform.childCount;
         Debug.Log(childrenNumber);
         for (int i = 0; i < childrenNumber; i++)
         {
             raycastArray[i] = transform.GetChild(i).gameObject;
         }*/
 
-    }
+	}
 
     // Update is called once per frame
     void Update()
@@ -48,8 +50,18 @@ public class Civilian : Player
 		}
         if (!DetectionCollision(raycastArray[0].transform.position) && !DetectionCollision(raycastArray[1].transform.position) && !DetectionCollision(raycastArray[2].transform.position))
         {
+			if (GetComponent<GAFMovieClip>().currentSequence.name != "course")
+			{
+				GetComponent<GAFMovieClip>().setSequence("course", true);
+			}
             transform.position += new Vector3(direction.x * Time.deltaTime * speed, 0f, 0f);
-        }
+        } else
+		{
+			if(GetComponent<GAFMovieClip>().currentSequence.name != "attente")
+			{
+				GetComponent<GAFMovieClip>().setSequence("attente", true);
+			}
+		}
     }
 
 	public void SwitchState()
