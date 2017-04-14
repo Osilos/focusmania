@@ -29,7 +29,8 @@ public class Bomb : MonoBehaviour {
 
 	public void LaunchEndExplosion()
 	{
-		StartCoroutine(EndExplosion());
+		if (gameObject)
+			StartCoroutine(EndExplosion());
 	}
 
 	IEnumerator EndExplosion()

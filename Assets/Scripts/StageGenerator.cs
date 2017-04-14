@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class StageGenerator : MonoBehaviour {
+public class StageGenerator : com.flavienm.engine.EngineObject {
 
 	[SerializeField]
 	private GameObject prefabQuad;
@@ -26,12 +26,13 @@ public class StageGenerator : MonoBehaviour {
 	private List<GameObject> quads = new List<GameObject>();
 
 	private float lastRowGenerate;
-    [SerializeField]
-    private float aupif;
-    [SerializeField]
-    private float offSetToDestroy;
+	[SerializeField]
+	private float aupif;
+	[SerializeField]
+	private float offSetToDestroy;
+    private bool shoudlReload;
 
-    private void Start ()
+    private void StartGenerate ()
 	{
 		textureSideSize = new Vector2(1f / (buildingSize.x * stageSize.x), 1f / (buildingSize.y * stageSize.y));
 		for (int i = 0; i < buildingSize.y; i++)
@@ -47,7 +48,29 @@ public class StageGenerator : MonoBehaviour {
 			InstantiateQuad(Vector3.zero, false);
 		}
 
-		Generate(new int[3] { 0, 1, 2});
+		Generate(new int[3] { 0, 1, 2 });
+	}
+
+	protected override void OnNewGame()
+	{
+        if (shoudlReload)
+        {
+            quads.ForEach(x => x.SetActive(false));
+            StartGenerate();
+        }
+	}
+
+	protected override void OnMenu()
+	{
+		base.OnMenu();
+        
+		StartGenerate();
+        shoudlReload = false;
+    }
+
+	protected override void OnGameOver()
+	{
+        shoudlReload = true;
 	}
 
 	public void Generate (int[] stages)
