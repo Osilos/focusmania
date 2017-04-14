@@ -17,10 +17,11 @@ public class Civilian : Player
 	private float speed;
 
 	private bool isPlaying;
-	
+
+	private int mark;
+
 	private void Start()
 	{
-		GameManager.NewGame += SwitchState;
 		direction = Vector3.right;
 	}
 	
@@ -55,7 +56,15 @@ public class Civilian : Player
 
 	protected override void OnNewGame()
 	{
+		isPlaying = true;
+		mark = 0;
+	}
 
+	protected override void OnMenu()
+	{
+		base.OnMenu();
+		base.OnNewGame();
+		isPlaying = false;
 	}
 
 	public void SwitchState()
@@ -84,8 +93,8 @@ public class Civilian : Player
 			if(startPoints.Count != 0)
 			{
 				OnMark();
-				transform.position = startPoints[0].position;
-				startPoints.RemoveAt(0);
+				transform.position = startPoints[mark].position;
+				mark++;
 			}
 		}
 	}

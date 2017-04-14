@@ -18,6 +18,13 @@ public class ScrollingCamera : Player {
 	protected override void OnNewGame()
 	{
 		lose = false;
+		mark = 0;
+	}
+
+	protected override void OnMenu()
+	{
+		base.OnMenu();
+		base.OnNewGame();
 	}
 
 	protected override void OnGameOver()
