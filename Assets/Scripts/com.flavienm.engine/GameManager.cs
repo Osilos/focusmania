@@ -9,6 +9,8 @@ namespace com.flavienm.engine
 		public delegate void GameEvent();
 		public delegate void GameValueEvent(int value);
 
+        public GameObject level;
+
 		public static bool isSoundEnabel = true;
 		private static float difficulty = 0f;
 		private static float minDifficulty = 1f;
@@ -41,7 +43,8 @@ namespace com.flavienm.engine
 
 		void Start()
 		{
-			Application.targetFrameRate = 30;
+            currentLevel = Instantiate(level) as GameObject;
+            Application.targetFrameRate = 30;
 			
 			com.flavienm.engine.Player.Win += OnPlayerWin;
 			com.flavienm.engine.Player.Lose += OnPlayerLose;
@@ -65,7 +68,10 @@ namespace com.flavienm.engine
 			}
 		}
 
-		public void GoMenu()
+        GameObject currentLevel;
+
+
+        public void GoMenu()
 		{
 			DispatchMenuEvent();
 		}
@@ -125,7 +131,10 @@ namespace com.flavienm.engine
 
 		private void DispatchMenuEvent()
 		{
-			if (Menu != null)
+            if (currentLevel)
+                Destroy(currentLevel);
+            currentLevel = Instantiate(level) as GameObject;
+            if (Menu != null)
 			{
 				Menu();
 			}
