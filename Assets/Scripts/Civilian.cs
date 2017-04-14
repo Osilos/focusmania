@@ -15,6 +15,8 @@ public class Civilian : Player
 
 	[SerializeField]
 	private float speed;
+	[SerializeField]
+	private AudioSource crii;
 
 	private bool isPlaying;
 
@@ -89,6 +91,14 @@ public class Civilian : Player
 	private void ChangeDirection()
 	{
 		direction *= -1;
+	}
+
+	public void cri (bool have)
+	{
+		Debug.Log("CRI");
+		if (have)
+			crii.Play();
+		else crii.Stop();
 	}
 
 	void OnTriggerEnter(Collider other)

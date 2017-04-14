@@ -16,10 +16,10 @@ public class FollowEye : Player {
 	private Coroutine currentCoroutine;
 
 	public bool isPlaying;
-    [SerializeField]
-    private AudioSource laserSound;
-    [SerializeField]
-    private AudioSource xRaySound;
+	[SerializeField]
+	private AudioSource laserSound;
+	[SerializeField]
+	private AudioSource xRaySound;
 
 	void Start () {
 		com.flavienm.engine.input.Input.positionInput += OnMovement;
@@ -55,17 +55,17 @@ public class FollowEye : Player {
 		
 		if (laser)
 		{
-            laserSound.Play();
-            xRaySound.Stop();
+			laserSound.Play();
+			xRaySound.Stop();
 			LaserParticle.gameObject.SetActive(true);
 			StartCoroutine(ReActivateCollider());
 		}
 		else
 		{
-            laserSound.Stop();
-            xRaySound.Play();
-            xRaySound.SetScheduledEndTime(AudioSettings.dspTime + (5));
-            LaserParticle.gameObject.SetActive(false);
+			laserSound.Stop();
+			xRaySound.Play();
+			xRaySound.SetScheduledEndTime(AudioSettings.dspTime + (5));
+			LaserParticle.gameObject.SetActive(false);
 		}
 	}
 
@@ -114,6 +114,7 @@ public class FollowEye : Player {
 				if(other.GetComponent<GAFMovieClip>().currentSequence.name != "hit")
 				{
 					other.GetComponent<GAFMovieClip>().setSequence("hit", true);
+					other.GetComponent<Civilian>().cri(true);
 				}
 			}
 		}
@@ -126,6 +127,7 @@ public class FollowEye : Player {
 			if(other.GetComponent<GAFMovieClip>().currentSequence.name == "hit")
 			{
 				other.GetComponent<GAFMovieClip>().setSequence("attente", true);
+				other.GetComponent<Civilian>().cri(false);
 			}
 		}
 	}
