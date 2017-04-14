@@ -35,6 +35,10 @@ public class Civilian : Player
 	{
 		if (!isPlaying)
 			return;
+		if(GetComponent<GAFMovieClip>().currentSequence.name == "hit")
+		{
+			return;
+		}
 		if (!DetectionCollision(raycastArray[0].transform.position) 
 			&& !DetectionCollision(raycastArray[1].transform.position) 
 			&& !DetectionCollision(raycastArray[2].transform.position))
