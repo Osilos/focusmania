@@ -51,7 +51,6 @@ namespace com.flavienm.engine
 
 		protected virtual void OnLose ()
 		{
-			Debug.Log("ON LOSE");
 			DispatchLoseEvent();
 		}
 
