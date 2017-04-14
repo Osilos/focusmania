@@ -13,9 +13,24 @@ public class ScrollingCamera : Player {
 	public int levelBeforeScroll;
 	[SerializeField]
 	private int mark;
+	private bool lose;
 
 	protected override void OnNewGame()
 	{
+		lose = false;
+		mark = 0;
+	}
+
+	protected override void OnMenu()
+	{
+		base.OnMenu();
+		base.OnNewGame();
+	}
+
+	protected override void OnGameOver()
+	{
+		base.OnGameOver();
+		lose = true;
 	}
 
 	protected override void OnMarkPoint()
@@ -34,7 +49,7 @@ public class ScrollingCamera : Player {
 	private void scrollingMovement(){
 		if (mark < levelBeforeScroll)
 			return;
-		if (transform.position.y > -yLimit)
+		if (transform.position.y > -yLimit && !lose)
 		{
 			float scrollingSpeed = Time.deltaTime * speed;
 			transform.position += new Vector3(0, -scrollingSpeed, 0);
