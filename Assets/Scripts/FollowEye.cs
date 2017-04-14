@@ -25,7 +25,8 @@ public class FollowEye : Player {
 		com.flavienm.engine.input.Input.space += OnSpace;
 		GameManager.NewGame += SwitchState;
 		LaserParticle.gameObject.SetActive(false);
-	}
+        StartCoroutine(ReActivateCollider());
+    }
 
 	void OnDestroy ()
 	{
@@ -42,12 +43,14 @@ public class FollowEye : Player {
 	private void OnSpace ()
 	{
 		laser = !laser;
-		if(laser)
+		
+		if (laser)
 		{
             laserSound.Play();
             xRaySound.Stop();
 			LaserParticle.gameObject.SetActive(true);
-		}
+            StartCoroutine(ReActivateCollider());
+        }
 		else
 		{
             laserSound.Stop();
@@ -56,7 +59,14 @@ public class FollowEye : Player {
             LaserParticle.gameObject.SetActive(false);
 		}
 	}
-	
+
+	IEnumerator ReActivateCollider ()
+	{
+		GetComponent<Collider>().enabled = false;
+		yield return new WaitForSeconds(0.05f);
+		GetComponent<Collider>().enabled = true;
+	}
+
 	private void OnMovement (Vector3 position)
 	{
 		position.z = 0f;
@@ -101,6 +111,7 @@ public class FollowEye : Player {
 
 	public void SwitchState()
 	{
-		isPlaying = !isPlaying;
+        StartCoroutine(ReActivateCollider());
+        isPlaying = !isPlaying;
 	}
 }

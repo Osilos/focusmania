@@ -57,7 +57,7 @@ namespace com.flavienm.engine
 
 		protected virtual void OnWin()
 		{
-			DispatchLoseEvent();
+			DispatchWinEvent();
 		}
 
 
