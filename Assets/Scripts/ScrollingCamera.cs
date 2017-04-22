@@ -13,6 +13,8 @@ public class ScrollingCamera : Player {
 	public int levelBeforeScroll;
 	[SerializeField]
 	private int mark;
+	[SerializeField]
+	private float multiplicatorToReachPlayer;
 	private bool lose;
 
 	protected override void OnNewGame()
@@ -49,9 +51,14 @@ public class ScrollingCamera : Player {
 	private void scrollingMovement(){
 		if (mark < levelBeforeScroll)
 			return;
+
 		if (transform.position.y > -yLimit && !lose)
 		{
 			float scrollingSpeed = Time.deltaTime * speed;
+			if (transform.position.y > mark * -10f + 10f)
+			{
+				scrollingSpeed *= multiplicatorToReachPlayer;
+			}
 			transform.position += new Vector3(0, -scrollingSpeed, 0);
 		}
 		
