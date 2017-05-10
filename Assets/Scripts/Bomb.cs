@@ -29,7 +29,7 @@ public class Bomb : MonoBehaviour {
 
 	public void LaunchEndExplosion()
 	{
-		if (gameObject)
+		if (gameObject != null)
 			StartCoroutine(EndExplosion());
 	}
 
@@ -41,7 +41,7 @@ public class Bomb : MonoBehaviour {
 
 	public void Explosion()
 	{
-        explosionSound.Play();
+        //explosionSound.Play();
 		Collider[] colliders = Physics.OverlapSphere(transform.position, ExplosionRadius);
 		foreach(Collider hit in colliders)
 		{
@@ -69,6 +69,7 @@ public class Bomb : MonoBehaviour {
 
 	private void OnDestroy()
 	{
-		CancelInvoke();
+        GameManager.BlowBombs -= LaunchEndExplosion;
+        CancelInvoke();
 	}
 }
